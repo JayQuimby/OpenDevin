@@ -9,7 +9,7 @@ from opendevin.action import (
     AgentThinkAction,
 )
 
-from prompts.util import get_yaml, get_docs_for
+from .prompts.util import get_yaml, get_docs_for
 
 import re
 
@@ -21,7 +21,7 @@ NIFE = AgentEchoAction(docs['not_in_file_error'])
 def invalid_error(cmd, cmd_name):
     return docs['invalid_command_error'].format(
         cmd,
-        get_docs_for(cmd_name, docs)
+        get_docs_for(cmd_name)
     )
 
 
