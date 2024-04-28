@@ -8,7 +8,7 @@ def msg_format(content: str, entity: str = 'user') -> dict:
 
 
 def dict_to_str(data, indent=0):
-    '''recursively returns a dict formatted as a string with indentation'''
+    """recursively returns a dict formatted as a string with indentation"""
     res = ''
     for key, value in data.items():
         res += '\n' + '\t' * indent + str(key) + ': '
@@ -31,7 +31,7 @@ def dict_to_str(data, indent=0):
 
 
 def get_yaml(name: str):
-    '''returns the contents of a yaml file as a dict'''
+    """returns the contents of a yaml file as a dict"""
     with open(BASE + name + '.yml', 'r') as file:
         data = yaml.safe_load(file)
     return data
