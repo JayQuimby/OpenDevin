@@ -2,7 +2,7 @@ from typing import List
 from opendevin.agent import Agent
 from opendevin.llm.llm import LLM
 from opendevin.state import State
-
+from opendevin.observation import Observation
 from opendevin.action import (
     Action,
     AgentThinkAction,
@@ -10,9 +10,15 @@ from opendevin.action import (
     FileWriteAction,
 )
 
-from opendevin.observation import Observation
-from .prompts.util import get_prompt, format_memory
-from .parser import parse_command
+from .prompts.util import (
+    get_prompt,
+    format_memory
+)
+
+from .parser import (
+    parse_command,
+    parse_prompt
+)
 
 
 class DynamicAgent(Agent):
@@ -62,7 +68,9 @@ class DynamicAgent(Agent):
             self.memory,
             state.plan.main_goal
         )
-        return self._completion(msgs)
+        raw_output = self._completion(msgs)
+        print(f'\033[7mThinking:\n{raw_output}')
+        return parse_prompt(raw_output)
 
     def _act(self):
         msgs = get_prompt(

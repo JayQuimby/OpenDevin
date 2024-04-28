@@ -64,12 +64,21 @@ usage:
 not_in_file_error: 'You are not currently in a file. You can use the read command to open a file and then use goto to navigate through it.'
 
 invalid_command_error: |
-  ERROR - The command that you have entered is invalid!
+  ERROR: The command that you have entered is invalid!
   ```
-  {cmd}
+  {0}
   ```
   You may have caused this error by having multiple commands within your command block.
   If so, try again by running only one of the commands.
   Please refer to the following documentation for help.
 
-  {docs}
+  {1}
+
+command_does_not_exist: |
+  ERROR: The command that you entered does not exist.
+  ```
+  {0}
+  ```
+
+  This error most likely happened because you did not include a command within your latest output.
+  Reflect on what you were trying to do with the above output and try again using a command this time.

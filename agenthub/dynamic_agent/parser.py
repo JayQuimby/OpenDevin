@@ -12,6 +12,7 @@ from opendevin.action import (
 from .prompts.util import get_yaml, get_docs_for
 
 import re
+import shutil
 
 docs = get_yaml('docs')
 
@@ -34,6 +35,7 @@ VALIDATION = {
     'search_dir': r'^search_dir\s+(\S+)(?:\s+(\S+))?$',
     'find_file': r'^find_file\s+(\S+)(?:\s+(\S+))?$',
 }
+
 CHECK_PATH = ['scroll_up', 'scroll_down', 'goto', 'edit']
 
 
@@ -49,6 +51,13 @@ def validate(cmd: str, path, cmd_str):
             return AgentEchoAction(invalid_error(cmd_str, cmd))
 
     return None
+
+
+def is_valid_command(cmd):
+    if shutil.which(cmd):
+        return True
+    else:
+        return False
 
 
 def get_action_from_string(command_string: str, path: str, line: int, thoughts: str = '') -> Action | None:
@@ -116,16 +125,16 @@ def get_action_from_string(command_string: str, path: str, line: int, thoughts: 
 
     else:
         # check bash command
-        obs = str(CmdRunAction(f'type {cmd}'))
-        if obs.split(':')[-1].strip() == 'not found':
+        valid = is_valid_command(cmd)
+        if not valid:
             # echo not found error for llm
-            return AgentEchoAction(content=obs)
+            return AgentEchoAction(docs['command_does_not_exist'].format(command_string))
         else:
             # run valid command
             return CmdRunAction(command_string)
 
 
-def parse_command(input_str: str, path: str, line: int):
+def parse_command(input_str: str, path: str, line: int) -> tuple[Action | None, str]:
     """
     Parses a given string and separates the command (enclosed in triple backticks) from any accompanying text.
 
@@ -146,3 +155,11 @@ def parse_command(input_str: str, path: str, line: int):
         if action:
             return action, accompanying_text
     return None, input_str  # used for retry
+
+
+def parse_prompt(raw: str, key='PROMPT:') -> str:
+    if key in raw:
+        idx = raw.index(key) + len(key)
+        return raw[idx:].strip()
+    else:
+        return raw

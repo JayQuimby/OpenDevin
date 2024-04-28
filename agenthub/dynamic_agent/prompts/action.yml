@@ -24,9 +24,10 @@ prompt:
       Line: {3}
 
   EXPECTATION:
-    - You are expected to product a thought and action that are in the proper format outlined below
+    - You are expected to produce a thought and action that are in the proper format outlined below
     - If you make any code changes it is expected that the code is working and that the spacing is proper
     - There should only be one command within the triple back ticks
+    - All of the available commands can be found in the documentation
 
   FORMAT: |
     The following is an outline of the expected format for your response

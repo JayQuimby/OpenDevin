@@ -32,15 +32,16 @@ prompt:
     This output will be parsed and thus it is very important that you follow the outline below when you make your output.
     Make sure that you use the keyword "PROMPT:" to designate where the prompt section starts, everything past that point will be passed to your partner.
 
-    Here is an abstract example:
+    Here is an abstract example, the items surrounded by <> are suggestions for you to fill in based on the context:
 
     <This is where you would analyze the context of the problem>
-    <brainstorm some potential solutions to the problem>
-    <come to a consensus on the best next action>
+    <You should brainstorm some potential solutions to the problem>
+    <Then come to a consensus on the best next action>
 
     PROMPT:
-    <A prompt that will be given to the coder agent to create code based on>
-    <Mention the specific task that the model needs to accomplish on this step>
-    <Give as much help as you can to the model based on the context you have and your knowledge of the tools>
+    <This section is where you convert your idea into instructions>
+    <Be sure to make this section in the form of an instruction>
+    <Remember that your coding partner is counting on these instructions to guide their next action>
+    <be sure to include recommended tools for the job in your instructions>
 
   START: 'Now take the above instructions and produce the expected output.'
