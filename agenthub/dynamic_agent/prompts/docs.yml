@@ -1,84 +1,125 @@
-usage:
-  exit:
-    docstr: "The exit command notifies the system that the task has been completed."
-    use:
-      - "```exit``` - Exits the development loop"
+not_in_file_error: >
+  You are not currently in a file.
+  You can use the read command to open an existing file and then navigate through it,
+  or you can create a new file using the write command, then navigate through it.
 
-  read:
-    docstr: "The read command enables you to read a file on particular lines, or the whole thing."
-    use:
-     - "```read <file>``` - Reads an entire file and shows you the contents. This is good for reviewing or getting familiar with a file"
-     - "```read <file> <start> <end>``` - Reads the file from start to end lines. This is useful for looking at a particular part of a file"
-
-  write:
-    docstr: "The write command enables you to write to files. To modify files that are open use the edit command."
-    use:
-     - "```write <file> <changes>``` - Completely rewrites the file to have the changes you listed"
-     - "```write <file> <changes> <start> <end>``` - Rewrites the file on the lines that you designate for start and end with changes"
-
-  edit:
-    docstr: "The edit command enables you to modify the currently open file"
-    use:
-      - "```edit <start> <end> <changes>``` - Rewrites the currently open file between lines start and end with changes"
-
-  browse:
-    docstr: "The browse command enables you to get web pages in text format."
-    use:
-      - "```browse <url>``` - Browses the internet and returns the text format of the url you request."
-
-  think:
-    docstr: "The think command allows you to commit a specific thought to memory for later"
-    use:
-      - "```think <thought>``` - This will save the thought for late so that you can read it in your memories"
-
-  scroll_up:
-    docstr: "The scroll_up command enables you to scroll up in the current file"
-    use:
-      - "```scroll_up``` - Returns the 100 lines above your current line in the current file"
-
-  scroll_down:
-    docstr: "The scroll_down command enables you to scroll down in the current file"
-    use:
-      - "```scroll_down``` - Returns the 100 lines below your current line in the current file"
-
-  goto:
-    docstr: "The goto command enables you to go to a specific line in the current file"
-    use:
-      - "```goto <line>``` - This will allow you to navigate extremely quickly through the current file"
-
-  search_for:
-    docstr: "The search_for command enables you to search for a particular substring within the current file"
-    use:
-      - "```search_for <item>``` - This will search through all of the lines in a file to try and find a substring match for your search item."
-
-  search_dir:
-    docstr: "The search_dir command enables you to search for a particular substring within all the files of a directory"
-    use:
-      - "```search_dir``` - This will search through your current directory and return all of the lines and files that have item in them"
-
-  find_file:
-    docstr: "The find_file command enables you to find a file very quickly"
-    use:
-      - "```find_file <name>``` - This will search your working directory for any files matching the name you specify"
-
-not_in_file_error: 'You are not currently in a file. You can use the read command to open a file and then use goto to navigate through it.'
-
-invalid_command_error: |
-  ERROR: The command that you have entered is invalid!
+command_invalid_error: |
+  ERROR: The command that you have entered is invalid...
   ```
   {0}
   ```
   You may have caused this error by having multiple commands within your command block.
-  If so, try again by running only one of the commands.
-  Please refer to the following documentation for help.
+  Otherwise you most likely entered the command incorrectly.
+  Please refer to the following documentation for help:
 
   {1}
 
-command_does_not_exist: |
-  ERROR: The command that you entered does not exist.
+command_does_not_exist_error: |
+  ERROR: The command that you entered does not exist...
   ```
   {0}
   ```
 
   This error most likely happened because you did not include a command within your latest output.
   Reflect on what you were trying to do with the above output and try again using a command this time.
+
+usage:
+  exit:
+    docstr: "The exit command notifies the system that the task has been completed."
+    args: 'None'
+    use:
+      - "```exit``` - Exits the development loop"
+    example:
+      - "```exit```"
+
+  read:
+    docstr: "The read command enables you to read a file on particular lines, or the whole thing."
+    args: '<file> [<start> <end>]. Defaults: start=0, end=-1'
+    use:
+     - "```read <file>``` - Reads an entire file and shows you the contents. This is good for reviewing or getting familiar with a file"
+     - "```read <file> <start> <end>``` - Reads the file from start to end lines. This is useful for looking at a particular part of a file"
+    example:
+      - "```read example.txt```"
+      - "```read example.txt 10 20```"
+
+  write:
+    docstr: "The write command enables you to write to files. To modify files that are open use the edit command."
+    args: '<file> <changes> [<start> <end>]. Defaults: start=0, end=-1'
+    use:
+     - "```write <file> <changes>``` - Completely rewrites the file to have the changes you listed"
+     - "```write <file> <changes> <start> <end>``` - Rewrites the file on the lines that you designate for start and end with changes"
+    example:
+      - "```write example.txt This is a new file content```"
+      - "```write example.txt This is a change 5 10```"
+
+  edit:
+    docstr: "The edit command enables you to modify the currently open file"
+    args: '<start> <end> <changes>'
+    use:
+      - "```edit <start> <end> <changes>``` - Rewrites the currently open file between lines start and end with changes"
+    example:
+      - "```edit 10 20 This is a change to lines 10-20```"
+
+  browse:
+    docstr: "The browse command enables you to get web pages in text format."
+    args: '<url>'
+    use:
+      - "```browse <url>``` - Browses the internet and returns the text format of the url you request."
+    example:
+      - "```browse https://www.example.com```"
+
+  think:
+    docstr: "The think command allows you to commit a specific thought to memory for later"
+    args: '<thought>'
+    use:
+      - "```think <thought>``` - This will save the thought for late so that you can read it in your memories"
+    example:
+      - "```think Remember to follow up on task X when this task finishes```"
+
+  scroll_up:
+    docstr: "The scroll_up command enables you to scroll up in the current file"
+    args: 'None'
+    use:
+      - "```scroll_up``` - Returns the 100 lines above your current line in the current file"
+    example:
+      - "```scroll_up```"
+
+  scroll_down:
+    docstr: "The scroll_down command enables you to scroll down in the current file"
+    args: 'None'
+    use:
+      - "```scroll_down``` - Returns the 100 lines below your current line in the current file"
+    example:
+      - "```scroll_down```"
+
+  goto:
+    docstr: "The goto command enables you to go to a specific line in the current file"
+    args: '<line>'
+    use:
+      - "```goto <line>``` - This will allow you to navigate extremely quickly through the current file"
+    example:
+      - "```goto 42```"
+
+  search_for:
+    docstr: "The search_for command enables you to search for a particular substring within the current file"
+    args: '<item>'
+    use:
+      - "```search_for <item>``` - This will search through all of the lines in a file to try and find a substring match for your search item."
+    example:
+      - "```search_for example string```"
+
+  search_dir:
+    docstr: "The search_dir command enables you to search for a particular substring within all the files of a directory"
+    args: '<item>'
+    use:
+      - "```search_dir <item>``` - This will search through your current directory and return all of the lines and files that have item in them"
+    example:
+      - "```search_dir example string```"
+
+  find_file:
+    docstr: "The find_file command enables you to find a file very quickly"
+    args: '<name>'
+    use:
+      - "```find_file <name>``` - This will search your working directory for any files matching the name you specify"
+    example:
+      - "```find_file example.txt```"

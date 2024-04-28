@@ -139,7 +139,7 @@ class FileWriteAction(ExecutableAction):
                     return AgentErrorObservation(f'Path is a directory: {self.path}. You can only write to files')
             except PermissionError:
                 return AgentErrorObservation(f'Malformed paths not permitted: {self.path}')
-        return FileWriteObservation(content='', path=self.path)
+        return FileWriteObservation(content=''.join(new_file), path=self.path)
 
     @property
     def message(self) -> str:

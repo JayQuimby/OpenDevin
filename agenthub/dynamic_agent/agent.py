@@ -66,22 +66,23 @@ class DynamicAgent(Agent):
         msgs = get_prompt(
             'think',
             self.memory,
-            state.plan.main_goal
+            goal=state.plan.main_goal
         )
         raw_output = self._completion(msgs)
         print(f'\033[7mThinking:\n{raw_output}')
         return parse_prompt(raw_output)
 
-    def _act(self):
+    def _act(self, state: State):
         msgs = get_prompt(
             'act',
             self.memory,
-            self.cur_thought,
-            self.cur_file,
-            self.cur_line
+            goal=state.plan.main_goal,
+            task=self.cur_thought,
+            file=self.cur_file,
+            line=self.cur_line
         )
         raw_output = self._completion(msgs)
-
+        print(f'\033[35mAction:\n{raw_output}')
         return parse_command(
             raw_output,
             self.cur_file,
@@ -93,7 +94,7 @@ class DynamicAgent(Agent):
             self._remember(prev_action, obs)
 
         self.cur_thought = self._think(state)
-        action, thought = self._act()
+        action, thought = self._act(state)
 
         if not action:
             action = AgentThinkAction(thought)

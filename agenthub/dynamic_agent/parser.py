@@ -20,7 +20,7 @@ NIFE = AgentEchoAction(docs['not_in_file_error'])
 
 
 def invalid_error(cmd, cmd_name):
-    return docs['invalid_command_error'].format(
+    return docs['command_invalid_error'].format(
         cmd,
         get_docs_for(cmd_name)
     )
@@ -128,7 +128,7 @@ def get_action_from_string(command_string: str, path: str, line: int, thoughts: 
         valid = is_valid_command(cmd)
         if not valid:
             # echo not found error for llm
-            return AgentEchoAction(docs['command_does_not_exist'].format(command_string))
+            return AgentEchoAction(docs['command_does_not_exist_error'].format(command_string))
         else:
             # run valid command
             return CmdRunAction(command_string)

@@ -57,12 +57,14 @@ def format_memory(act, obs):
 
 
 def get_docs_for(command: str) -> str:
-    cmd_usage = ALL['docs']['usage'][command]
-    res = f'Docs for {command}:\n'
-    res += cmd_usage['docstr'] + '\n\n'
-    res += 'Use Cases:\n'
-    for case in cmd_usage['use']:
-        res += '\t' + case + '\n'
+    doc_dict = ALL['docs']['usage'][command]
+    res = f'Documentation for {command}:\n'
+    args = '\n' if doc_dict['args'] == 'None' else f' {doc_dict["args"]}\n'
+    res += f'Format: {command}' + args
+    res += f'Description: {doc_dict["docstr"]}\n'
+    res += 'Use cases with examples:\n'
+    for use, example in zip(doc_dict['use'], doc_dict['example']):
+        res += f'\t{use}\n\t{example}\n'
     return res
 
 
@@ -71,6 +73,7 @@ def get_docs(lite=False) -> str:
     for k, v in ALL['docs']['usage'].items():
         res += f'{k}:\n'
         res += f'\tDescription: {v["docstr"]}\n'
+        res += f'\tArgs: {v["args"]}\n'
         if not lite:
             uses = '\n\t\t'.join(v['use'])
             res += '\tUsage:\n\t\t' + uses + '\n'
@@ -81,7 +84,7 @@ TECH_DOCS = get_docs()
 LITE_DOCS = get_docs(lite=True)
 
 
-def get_prompt(toggle: str, memory: list[str], *args):
+def get_prompt(toggle: str, memory: list[str], **kwargs):
     messages = [SYS_MSG]
     num_mems = len(memory)
     if num_mems > 0:
@@ -96,5 +99,6 @@ def get_prompt(toggle: str, memory: list[str], *args):
     else:
         prompt = dict_to_str(data['prompt'])
         docs = LITE_DOCS if toggle == 'think' else TECH_DOCS
-        messages.append(msg_format(prompt.format(docs, *args)))
+        formatted = prompt.format(docs=docs, **kwargs)
+        messages.append(msg_format(formatted))
         return messages
