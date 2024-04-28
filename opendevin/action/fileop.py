@@ -144,7 +144,7 @@ class FileWriteAction(ExecutableAction):
                     return AgentErrorObservation(f'File could not be decoded as utf-8: {self.path}')
             except PermissionError:
                 return AgentErrorObservation(f'Malformed paths not permitted: {self.path}')
-        return FileWriteObservation(content=''.join(new_file), path=self.path)
+        return FileWriteObservation(content='', path=self.path)
 
     @property
     def message(self) -> str:
