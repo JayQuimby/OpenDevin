@@ -1,28 +1,3 @@
-not_in_file_error: >
-  You are not currently in a file.
-  You can use the read command to open an existing file and then navigate through it,
-  or you can create a new file using the write command, then navigate through it.
-
-command_invalid_error: |
-  ERROR: The command that you have entered is invalid...
-  ```
-  {0}
-  ```
-  You may have caused this error by having multiple commands within your command block.
-  Otherwise you most likely entered the command incorrectly.
-  Please refer to the following documentation for help:
-
-  {1}
-
-command_does_not_exist_error: |
-  ERROR: The command that you entered does not exist...
-  ```
-  {0}
-  ```
-
-  This error most likely happened because you did not include a command within your latest output.
-  Reflect on what you were trying to do with the above output and try again using a command this time.
-
 usage:
   exit:
     docstr: "The exit command notifies the system that the task has been completed."
@@ -33,7 +8,7 @@ usage:
       - "```exit```"
 
   read:
-    docstr: "The read command enables you to read a file on particular lines, or the whole thing."
+    docstr: "The read command enables you to read a file on particular lines, or the whole thing. The file must exist to read it."
     args: '<file> [<start> <end>]. Defaults: start=0, end=-1'
     use:
      - "```read <file>``` - Reads an entire file and shows you the contents. This is good for reviewing or getting familiar with a file"
@@ -44,16 +19,16 @@ usage:
 
   write:
     docstr: "The write command enables you to write to files. To modify files that are open use the edit command."
-    args: '<file> <changes> [<start> <end>]. Defaults: start=0, end=-1'
+    args: '<file> <content> [<start> <end>]. Defaults: start=0, end=-1'
     use:
-     - "```write <file> <changes>``` - Completely rewrites the file to have the changes you listed"
-     - "```write <file> <changes> <start> <end>``` - Rewrites the file on the lines that you designate for start and end with changes"
+     - "```write <file> <content>``` - Completely rewrites the file to have the content you listed"
+     - "```write <file> <content> <start> <end>``` - Rewrites the file on the lines that you designate for start and end with content"
     example:
       - "```write example.txt This is a new file content```"
       - "```write example.txt This is a change 5 10```"
 
   edit:
-    docstr: "The edit command enables you to modify the currently open file"
+    docstr: "The edit command enables you to modify the currently open file."
     args: '<start> <end> <changes>'
     use:
       - "```edit <start> <end> <changes>``` - Rewrites the currently open file between lines start and end with changes"
@@ -123,3 +98,19 @@ usage:
       - "```find_file <name>``` - This will search your working directory for any files matching the name you specify"
     example:
       - "```find_file example.txt```"
+
+  bash:
+    docstr: "You are capable of using default bash commands in this environment"
+    args: "The arguments for each command are context specific"
+    use:
+      - "```ls``` - This will show you all of the files and folders in your working dir"
+      - "```mkdir <name>``` - This will create a new directory with the name you give it"
+      - "```touch <name>``` - This will create a new file with the name you give it. NOTE: you will need to use the read or write command to access it."
+      - "```chmod <flags> <file>``` - This will allow you to change access permissions"
+      - "```cd <dir>``` - This will change the current directory to the dir you designate"
+    example:
+      - "```ls```"
+      - "```mkdir test```"
+      - "```touch file.py```"
+      - "```chmod +x script.sh```"
+      - "```cd test```"

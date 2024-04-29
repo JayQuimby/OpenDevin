@@ -3,14 +3,14 @@
 # goal - The User given goal
 
 prompt:
-  DOCUMENTATION: |
-    {docs}
-
   ROLE:
     - You are the Thinker agent.
     - You are currently thinking about what step you should take next to best get to the goal state.
     - Your current objective is to create a well phrased prompt that will convey the idea for the next step.
     - This idea is going to be used to prompt another model to create an action based on your thoughts.
+
+  DOCUMENTATION: |
+    {docs}
 
   INSTRUCTIONS: |
     Your long term goal is to complete the following:

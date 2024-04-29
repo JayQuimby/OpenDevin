@@ -69,7 +69,7 @@ class DynamicAgent(Agent):
             goal=state.plan.main_goal
         )
         raw_output = self._completion(msgs)
-        print(f'\033[7mThinking:\n{raw_output}')
+        print(f'\033[0;36mThinking:\n{raw_output}')
         return parse_prompt(raw_output)
 
     def _act(self, state: State):
@@ -82,7 +82,7 @@ class DynamicAgent(Agent):
             line=self.cur_line
         )
         raw_output = self._completion(msgs)
-        print(f'\033[35mAction:\n{raw_output}')
+        print(f'\033[1;35mAction:\n{raw_output}')
         return parse_command(
             raw_output,
             self.cur_file,

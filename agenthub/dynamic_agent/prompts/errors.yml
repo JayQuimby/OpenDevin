@@ -1,0 +1,24 @@
+not_in_file_error: >
+  You are not currently in a file.
+  You can use the read command to open an existing file and then navigate through it,
+  or you can create a new file using the write command, then navigate through it.
+
+command_invalid_error: |
+  ERROR: The command that you have entered is invalid...
+  ```
+  {0}
+  ```
+  You may have caused this error by having multiple commands within your command block.
+  Otherwise you most likely entered the command incorrectly.
+  Please refer to the following documentation for help:
+
+  {1}
+
+command_does_not_exist_error: |
+  ERROR: The command that you entered does not exist...
+  ```
+  {0}
+  ```
+
+  This error most likely happened because you did not include a command within your latest output.
+  Reflect on what you were trying to do with the above output and try again using a command this time.

@@ -58,7 +58,7 @@ def format_memory(act, obs):
 
 def get_docs_for(command: str) -> str:
     doc_dict = ALL['docs']['usage'][command]
-    res = f'Documentation for {command}:\n'
+    res = f'Documentation for {command} command:\n'
     args = '\n' if doc_dict['args'] == 'None' else f' {doc_dict["args"]}\n'
     res += f'Format: {command}' + args
     res += f'Description: {doc_dict["docstr"]}\n'
@@ -69,9 +69,9 @@ def get_docs_for(command: str) -> str:
 
 
 def get_docs(lite=False) -> str:
-    res = '\nThis is the documentation for the custom commands you have access to:\n'
+    res = '\nCOMMANDS:\n'
     for k, v in ALL['docs']['usage'].items():
-        res += f'{k}:\n'
+        res += f'{k} command:\n'
         res += f'\tDescription: {v["docstr"]}\n'
         res += f'\tArgs: {v["args"]}\n'
         if not lite:
@@ -91,7 +91,8 @@ def get_prompt(toggle: str, memory: list[str], **kwargs):
         mems = memory if toggle == 'think' else memory[-min(num_mems, 5):]
         mem_prompt = ALL['system']['all_memories'].format('\n\n'.join(mems))
         messages.append(msg_format(mem_prompt))
-
+    else:
+        messages.append(msg_format(ALL['system']['first_step']))
     data = ALL.get(toggle, f'{toggle} is not a valid mode for (think | act)')
 
     if isinstance(data, str):

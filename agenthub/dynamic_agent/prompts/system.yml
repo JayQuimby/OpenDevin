@@ -15,6 +15,11 @@ all_memories: |
   They show the action that was taken and then the observation based on that action.
   Use them to provide context to the problem that you are solving.
 
+first_step: |
+  You are currently on step one and therefore do not have any memories.
+  This is a good time to setup your environment and start to plan out what you need to do to accomplish you goal.
+  A good first step is to either look at any links that have been given to you or use the 'ls' command to see anything in your working dir.
+  If the user has requested that you build something then start with making starter code.
 
 outline:
  SETTING:
